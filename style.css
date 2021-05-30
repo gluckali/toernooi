@@ -1,0 +1,118 @@
+body {
+    margin: 0 !important;
+    --navbar-height: 46px;
+  }
+  
+  .login {
+      margin: auto;
+      width: 50%;
+      border: 3px solid rgb(174, 168, 190);
+      padding: 10px;
+      float: center;
+  }
+  p.geen {
+      color: red;
+      font-size: 20px;
+  }
+  
+  
+  .navbar {
+      overflow: hidden;
+      background-color: rgb(87, 82, 82);
+      position: fixed; /* zodat het fixed is en niet beneden gaat met je  */
+      top: 0; /* doet nav bar helemaal boven */
+      height: 50px; 
+      width: 100%; /* self explainatory  */
+      margin-left: -10px; /* dit filt de gap als je een 2560x1440px scherm hebt */
+    }
+    
+    /* dits binnen de navbar hier boven */
+    .navbar a {
+      float: left;
+      display: block;
+      color: #f2f2f2;
+      text-align: center;
+      padding: 14px 16px;
+      text-decoration: none;
+    }
+    .navbar .fake-image {
+      width: 30px;
+      height: 30px;
+      background-color: rgb(230, 230, 9);
+      /* push the content away from the top */
+      margin-top: auto;
+      /* push the content away from the bottom */
+      margin-bottom: auto;
+      margin-left: 8px;
+  }
+    
+    /* kleur veranderd als je erover browst */
+    .navbar a:hover {
+      background: #ddd;
+      color: black;
+    }
+    /* dit is de fixed footer beneden met informatie */
+    .footer {
+      position: fixed;
+      left: 0;
+      bottom: 0;
+      width: 100%;
+      background-color: rgb(177, 169, 169);
+      color: rgb(255, 255, 255);
+      text-align: center;
+   }
+  /* this is for the text in the middle of the index because the nav bar kinda ruins it */
+  .h1 {
+      margin-top: 22%;
+  }
+  
+  .input {
+    margin-top: 25%;
+    width: 50%;
+    border: 3px solid green;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 10px;
+  }
+  /* Dropdown Button */
+.dropbtn {
+    background-color: #4CAF50;
+    color: white;
+    padding: 16px;
+    font-size: 16px;
+    border: none;
+  }
+  
+  /* The container <div> - needed to position the dropdown content */
+  .dropdown {
+    position: relative;
+    display: inline-block;
+  }
+  
+  /* Dropdown Content (Hidden by Default) */
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f1f1f1;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+  }
+  
+  /* Links inside the dropdown */
+  .dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+  }
+  
+  /* Change color of dropdown links on hover */
+  .dropdown-content a:hover {background-color: #ddd;}
+  
+  /* Show the dropdown menu on hover */
+  .dropdown:hover .dropdown-content {display: block;}
+  
+  /* Change the background color of the dropdown button when the dropdown content is shown */
+  .dropdown:hover .dropbtn {background-color: #3e8e41;}
+
