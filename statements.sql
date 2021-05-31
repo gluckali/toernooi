@@ -1,4 +1,4 @@
-CREATE TABLE toernooi;
+CREATE DATABASE toernooi;
 USE toernooi;
 
 
@@ -23,7 +23,7 @@ CREATE TABLE speler (
     s_achternaam varchar(40) NOT NULL,
     PRIMARY KEY (s_id),
     FOREIGN KEY (sch_id) REFERENCES school(sch_id)
-)
+);
 
 CREATE TABLE wedstrijden(
     w_id INT NOT NULL AUTO_INCREMENT,
@@ -48,4 +48,4 @@ CREATE TABLE aanmelding(
     PRIMARY KEY(a_id),
     FOREIGN KEY (t_id) REFERENCES toernooi(t_id),
     FOREIGN KEY (s_id) REFERENCES speler(s_id)
-)
+);

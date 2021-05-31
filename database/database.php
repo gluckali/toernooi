@@ -17,16 +17,18 @@ class database{
     try{
         $dsn = "mysql:host=$this->host;dbname=$this->database";
         $this->conn =new PDO ($dsn, $this->username, $this->password);
+
+        $this->conn->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING );
+
         }catch (PDOException $e) {
             // hier wordt er een error gegeven als de connectie niet werkt
-            die ("Unable to connect. Error: " . $e.getMessage());
+            // die ("Unable to connect. Error: " . $e.getMessage());
         }
     }
     
     public function add($statement, $named_placeholder, $location){
         $stmt = $this->conn->prepare($statement);
         $stmt->execute($named_placeholder);
-        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
         header('location:'.$location);
         exit();
     } 

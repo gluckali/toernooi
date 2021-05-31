@@ -1,80 +1,61 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Wedstrijden</title>
-        <link rel="stylesheet" href="style.css">
-    </head>
-    <body>
+<?php
+include '../database/database.php';
+include '../styles.php';
 
+$db = new database();
+$wedstrijden = $db->select('SELECT 
+wedstrijden.w_id,
+CONCAT(speler1.s_naam, " ", speler1.s_tussenvoegsel, "", speler1.s_achternaam) AS "Speler Een", 
+CONCAT(speler2.s_naam, " ", speler2.s_tussenvoegsel, "", speler2.s_achternaam) AS "Speler Twee",
+CONCAT(winnaar.s_naam, " ", winnaar.s_tussenvoegsel, "", winnaar.s_achternaam) AS "Winnaar",
+wedstrijden.w_ronde AS "Ronde", 
+toernooi.t_omschrijving AS "Toernooi", 
+toernooi.t_datum AS "Toernooi Datum",
+wedstrijden.w_score1 AS "Score Speler 1",
+wedstrijden.w_score2 AS "Score Speler 2"
+FROM wedstrijden
+INNER JOIN speler speler1
+ON speler1.s_id = wedstrijden.s_speler1id
+INNER JOIN speler speler2
+ON speler2.s_id = wedstrijden.s_speler2id
+LEFT JOIN speler winnaar
+ON winnaar.s_id = wedstrijden.s_winnaarid
+INNER JOIN toernooi
+ON toernooi.t_id = wedstrijden.t_id
+', []);
+
+$columns = array_keys($wedstrijden[0]);
+$wedstrijdenValues = array_values($wedstrijden);
+
+?>
+
+<h2>Wedstrijden</h2>
+
+<table>
+    <tr>
         <?php
-        include '../database/database.php';
-
-        $geenDataBeschikbaar = true;
-
-        $db = new database();
-        // haal eerst alle spelers op die uberhaupt een wedstrijd hebben gespeeld.
-        $sql = '
-            SELECT 
-                id, 
-                CONCAT(voornaam, " ", tussenvoegsel, " ", achternaam) as naam
-            FROM 
-                speler 
-            WHERE neemtDeel=1';
-        $spelersMetDeelname = $db->select($sql);
-        
-
-        if($_SERVER['REQUEST_METHOD'] == 'POST'){
-
-        $sql = '
-            SELECT 
-                w.id,
-                w.ronde, 
-                CONCAT(s.voornaam, " ", s.tussenvoegsel, " ", s.achternaam) as speler1,
-                CONCAT(s1.voornaam, " ", s1.tussenvoegsel, " ", s1.achternaam) as speler2,
-                w.punten1, 
-                w.punten2,
-                CONCAT(s3.voornaam, " ", s3.tussenvoegsel, " ", s3.achternaam) as winnaar
-            FROM wedstrijd w
-            INNER JOIN speler s
-            ON s.id = w.speler1ID
-            INNER JOIN speler s1
-            ON s1.id = w.speler2ID
-            INNER JOIN speler s3
-            ON s3.id = w.winnaarID
-            WHERE w.speler1ID=:id1 OR w.speler2ID=:id2';
-
-        
-        $placeholders = ['id1'=>$_POST['spelers'], 'id2'=>$_POST['spelers']];
-        $wedstrijden = $db->select($sql, $placeholders);
-
-        if(is_array($wedstrijden) && !empty($wedstrijden)){
-            $geenDataBeschikbaar = false;
-            create_table($wedstrijden, 'wedstrijd', FALSE);
-        }else if($geenDataBeschikbaar){ ?>
-            <p class='no-data'>Geen wedstrijd data beschikbaar</p>
-        <?php } 
+        foreach ($columns as $column) {
+            echo "<th> <strong> $column </strong> </th>";
         }
-        ?>  
+        ?>
+        <th> <a href="wedstrijdadd.php"> Add wedstrijd </a></th>
+    </tr>
+    <?php
+    foreach ($wedstrijdenValues as $wedstrijdColumns) {
+        echo "<tr>";
+        foreach ($wedstrijdColumns as $wedstrijdColumn) {
+            echo "<td>$wedstrijdColumn</td>";
+        }
+    ?>
+        <td>
+            <a href="wedstrijdedit.php?wedstrijd_id=<?php echo $wedstrijdColumns['w_id'] ?>">Edit</a>
+            <a href="wedstrijddelete.php?wedstrijd_id=<?php echo $wedstrijdColumns['w_id'] ?>">Delete</a>
+        </td>
+        </tr>
+    <?php } ?>
+    <form action='schooloverzicht.php' method='POST'>
+        <!-- <input type='submit' name='export' value='Export to excel file' /> -->
+    </form>
+</table>
 
-        <form action="wedstrijd.php" method="post">
-            <?php if(is_array($spelersMetDeelname) && !empty($spelersMetDeelname)){?>
-                <select name="spelers" required>
-                    <?php foreach($spelersMetDeelname as $key => $speler){?>
-                        <option value="<?php echo $speler['id'];?>"><?php echo $speler['naam'];?></option>
-                    <?php } ?>
-                </select><br><br>
-            <?php }else{ ?>
-                    <p class='no-data'>Voeg eerst een nieuwe wedstrijd toe</p>
-            <?php } ?>
-            <input type="submit" value="Toon overzicht"><br><br>
-        </form>
 
-        <button>
-            <a href="nieuw-wedstrijd.php">Nieuwe wedstrijd toevoegen</a>
-        </button>
-
-    </body>
-</html>

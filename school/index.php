@@ -5,29 +5,17 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../style.css">
-    <title>Document</title>
-    
+    <title>Exam</title>
 </head>
 <body>
+  <link rel="stylesheet" href="../style.css">
   <div class="navbar">
-  <a href="index.php">Home</a>
-    <a href="logout.php"> log out</a>
-    <a href="../speler/speleroverzicht.php"> overzicht spelers </a>
-    <a href="../school/schooloverzicht.php"> overzicht school </a>
-    <a href="../toernooi/toernooioverzicht.php"> overzicht toernooi </a>
-  </div>
-  <div class="h1"> 
-    <h1> you have logged in </h1>
-  </div>
-  <?php 
-        Session_start();
-        if (isset($_SESSION['gebruikersnaam'])) {
-            echo '<h1>hello ' . $_SESSION['gebruikersnaam'] . '!</h1> ';
-        }
-        
-    ?>
-  </div>
-  <div class="footer">
+    <a href="index.php">Home</a>
+    <a href="../speler/speleroverzicht.php"> Spelers </a>
+    <a href="../school/schooloverzicht.php"> Scholen </a>
+    <a href="../toernooi/toernooioverzicht.php"> Toernooien </a>
+    <a href="../aanmelding/aanmeldingoverzicht.php"> Aanmeldingen </a>
+    <a href="../wedstrijd/wedstrijdoverzicht.php"> Wedstrijden </a>
   </div>
 </body>
 </html> 

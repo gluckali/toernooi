@@ -1,5 +1,6 @@
 <?php 
 include '../database/database.php';
+include '../styles.php';
 
 $db = new database();
 $speler = $db->select("SELECT * FROM speler", []);
@@ -8,6 +9,8 @@ $columns = array_keys($speler[0]);
 $row_data = array_values($speler);
 ?>
 
+<h1>Spelers overzicht</h1>
+
 <table> 
     <tr>
     <?php 
@@ -15,10 +18,8 @@ $row_data = array_values($speler);
             echo"<th> <strong> $column </strong> </th>";
         }
     ?>
-    <th colspan="2"> action </th>
-    <th> <a href="speleradd.php"> speler toevoegen </a></th>
+    <th> <a href="speleradd.php"> Speler Toevoegen </a></th>
     </tr>
-    <th colspan="3"> </th>
     <?php 
         foreach($row_data as $rows){ 
             echo "<tr>";
@@ -27,8 +28,8 @@ $row_data = array_values($speler);
                 }       
                 ?>
                 <td>
-                <a href="speleredit.php?s_id=<?php echo $rows['s_id']?>">edit</a>
-                <a href="spelerdelete.php?s_id=<?php echo $rows['s_id']?>">delete</a>
+                <a href="speleredit.php?s_id=<?php echo $rows['s_id']?>">Edit</a>
+                <a href="spelerdelete.php?s_id=<?php echo $rows['s_id']?>">Delete</a>
                 </td>
                 </tr>
             <?php } ?>
